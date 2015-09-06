@@ -1,0 +1,90 @@
+<!doctype html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>WS Inspector</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+	<style type="text/css">
+		body {
+			background-color: #ebebeb;
+			font-family: "Helvetica Neue", Arial, sans-serif;
+			padding-top: 50px;
+		}
+		.btn {
+			transition: all 0.15s ease-in-out;
+		}
+		textarea.form-control {
+			min-height: 100px;
+			resize: vertical;
+		}
+		.alert {
+			display: none;
+		}
+	</style>
+	<script type="text/javascript">
+		$(function () {
+			$("#btn").click(function () {
+				try {
+					var data = $("#data").val();
+					if (data === "") {
+						data = {};
+					} else {
+						data = JSON.parse(data);
+					}					
+				} catch (ex) {
+					$("#parse-err").html(ex.message).fadeIn("fast").delay(3000).fadeOut("slow");
+				}
+				$.ajax({
+					method : $("#method").val(),
+					data : data,
+					url : $("#url").val()
+				}).done(function (res) {
+					console.log("The response (" + new Date() + "):", res)
+					$("#request-succ").fadeIn("fast").delay(3000).fadeOut("slow");
+				}).fail(function () {
+					$("#request-err").fadeIn("fast").delay(3000).fadeOut("slow");
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<form class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="text-center">WS Inspector</h1>
+				<div class="form-group">
+					<label for="method">HTTP method:</label>
+					<select id="method" class="form-control">
+						<option value="GET">GET</option>
+						<option value="POST">POST</option>
+						<option value="PUT">PUT</option>
+						<option value="DELETE">DELETE</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="url">URL:</label>
+					<input type="text" id="url" class="form-control" value="http://localhost/">
+				</div>
+				<div class="form-group">
+					<label for="data">Data (optional):</label>
+					<textarea id="data" class="form-control" placeholder="json data"></textarea>
+				</div>
+				<div class="form-group">
+					<button type="button" id="btn" class="btn btn-primary">Inspect</button>
+				</div>
+				<div class="alert alert-success" id="request-succ">
+					The request was executed successfully and the response was logged.
+				</div>
+				<div class="alert alert-danger" id="request-err">
+					An error occurred during the request
+				</div>
+				<div class="alert alert-danger" id="parse-err"></div>
+			</div>
+		</div>
+	</form>
+</body>
+
+</html>
