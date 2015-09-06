@@ -1,2 +1,2 @@
 # wsinspector
-a small tool to inspect ws responses
+A small tool to inspect ws responses. Requires jQuery and Bootstrap
