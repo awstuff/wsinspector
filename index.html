@@ -36,7 +36,7 @@
 					data : data,
 					url : $("#url").val()
 				}).done(function (res) {
-					console.log("The response (" + new Date() + "):", res)
+					console.log("The response (" + new Date() + "):", res);
 					$("#request-succ").fadeIn("fast").delay(3000).fadeOut("slow");
 				}).fail(function () {
 					$("#request-err").fadeIn("fast").delay(3000).fadeOut("slow");
