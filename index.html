@@ -26,17 +26,12 @@
 	<script type="text/javascript">
 		$(function () {
 			$("#btn").click(function () {
-				try {
-					var data = $("#data").val();
-					if (data === "") {
-						data = {};
-					} else {
-						data = JSON.parse(data);
-					}					
-				} catch (ex) {
-					$("#parse-err").html(ex.message).fadeIn("fast").delay(3000).fadeOut("slow");
+				var data = $("#data").val();
+				if (data === "") {
+					data = "{}";
 				}
 				$.ajax({
+					contentType : "application/json",
 					method : $("#method").val(),
 					data : data,
 					url : $("#url").val()
@@ -81,7 +76,6 @@
 				<div class="alert alert-danger" id="request-err">
 					An error occurred during the request
 				</div>
-				<div class="alert alert-danger" id="parse-err"></div>
 			</div>
 		</div>
 	</form>
