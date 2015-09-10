@@ -7,26 +7,27 @@
 	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 	<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
 	<style type="text/css">
-		body {
-			background-color: #ebebeb;
-			font-family: "Helvetica Neue", Arial, sans-serif;
-			padding-top: 50px;
-		}
-		.btn {
-			transition: all 0.15s ease-in-out;
-		}
-		textarea.form-control {
-			font-family: monospace;
-			min-height: 100px;
-			resize: vertical;
-		}
-		.alert {
-			display: none;
-		}
+	body {
+		background-color: #ebebeb;
+		font-family: "Helvetica Neue", Arial, sans-serif;
+		padding-top: 50px;
+	}
+	.btn {
+		transition: all 0.15s ease-in-out;
+	}
+	textarea.form-control {
+		font-family: monospace;
+		min-height: 100px;
+		resize: vertical;
+	}
+	.alert {
+		display: none;
+	}
 	</style>
 	<script type="text/javascript">
-		$(function () {
-			$("#btn").click(function () {
+	$(function () {
+		$("#btn").click(function () {
+			if ($("#file")[0].value === "") {
 				var data = $("#data").val();
 				if (data === "") {
 					data = "{}";
@@ -42,8 +43,24 @@
 				}).fail(function () {
 					$("#request-err").fadeIn("fast").delay(3000).fadeOut("slow");
 				});
-			});
+			} else {
+				var data = new FormData();
+				data.append("file", $("#file")[0].files[0]);
+				$.ajax({
+					processData: false,
+					contentType : false,
+					method : $("#method").val(),
+					data : data,
+					url : $("#url").val()
+				}).done(function (res) {
+					console.log("The response (" + new Date() + "):", res);
+					$("#request-succ").fadeIn("fast").delay(3000).fadeOut("slow");
+				}).fail(function () {
+					$("#request-err").fadeIn("fast").delay(3000).fadeOut("slow");
+				});
+			}
 		});
+	});
 	</script>
 </head>
 <body>
@@ -67,6 +84,10 @@
 				<div class="form-group">
 					<label for="data">Data (optional):</label>
 					<textarea id="data" class="form-control" placeholder="json data"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="file">File (optional / alternative to json data):</label>
+					<input type="file" id="file">
 				</div>
 				<div class="form-group">
 					<button type="button" id="btn" class="btn btn-primary">Inspect</button>
