@@ -32,12 +32,16 @@
 				if (data === "") {
 					data = "{}";
 				}
-				$.ajax({
+				var theObj = {
 					contentType : "application/json",
 					method : $("#method").val(),
 					data : data,
 					url : $("#url").val()
-				}).done(function (res) {
+				};
+				if ($("#as-header").prop("checked") === true) {
+					theObj.headers = JSON.parse(data);
+				}
+				$.ajax(theObj).done(function (res) {
 					console.log("The response (" + new Date() + "):", res);
 					$("#request-succ").fadeIn("fast").delay(3000).fadeOut("slow");
 				}).fail(function () {
@@ -83,6 +87,11 @@
 				</div>
 				<div class="form-group">
 					<label for="data">Data (optional):</label>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="as-header"> Use data as additional headers
+						</label>
+					</div>
 					<textarea id="data" class="form-control" placeholder="json data"></textarea>
 				</div>
 				<div class="form-group">
