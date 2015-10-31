@@ -5,7 +5,12 @@
 	<meta charset="utf-8">
 	<title>WS Inspector</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<link rel="stylesheet" href="material-design-bootstrap/css/roboto.min.css">
+	<link rel="stylesheet" href="material-design-bootstrap/css/material.min.css">
+	<link rel="stylesheet" href="material-design-bootstrap/css/ripples.min.css">
 	<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="material-design-bootstrap/js/ripples.min.js"></script>
+	<script type="text/javascript" src="material-design-bootstrap/js/material.min.js"></script>
 	<style type="text/css">
 	body {
 		background-color: #ebebeb;
@@ -17,6 +22,7 @@
 	}
 	textarea.form-control {
 		font-family: monospace;
+		max-height: 300px;
 		min-height: 100px;
 		resize: vertical;
 	}
@@ -26,6 +32,7 @@
 	</style>
 	<script type="text/javascript">
 	$(function () {
+		$.material.init();
 		$("#btn").click(function () {
 			if ($("#file")[0].value === "") {
 				var data = $("#data").val();
@@ -71,41 +78,45 @@
 	<form class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1 class="text-center">WS Inspector</h1>
-				<div class="form-group">
-					<label for="method">HTTP method:</label>
-					<select id="method" class="form-control">
-						<option value="GET">GET</option>
-						<option value="POST">POST</option>
-						<option value="PUT">PUT</option>
-						<option value="DELETE">DELETE</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="url">URL:</label>
-					<input type="text" id="url" class="form-control" value="http://localhost/">
-				</div>
-				<div class="form-group">
-					<label for="data">Data (optional):</label>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="as-header"> Use data as additional headers
-						</label>
+				<div class="well">
+					<h1 class="text-center text-primary">WS Inspector</h1>
+					<div class="form-group">
+						<label for="method">HTTP method:</label>
+						<select id="method" class="form-control">
+							<option value="GET">GET</option>
+							<option value="POST">POST</option>
+							<option value="PUT">PUT</option>
+							<option value="DELETE">DELETE</option>
+						</select>
 					</div>
-					<textarea id="data" class="form-control" placeholder="json data"></textarea>
-				</div>
-				<div class="form-group">
-					<label for="file">File (optional / alternative to json data):</label>
-					<input type="file" id="file">
-				</div>
-				<div class="form-group">
-					<button type="button" id="btn" class="btn btn-primary">Inspect</button>
-				</div>
-				<div class="alert alert-success" id="request-succ">
-					The request was executed successfully and the response was logged to the browser's console.
-				</div>
-				<div class="alert alert-danger" id="request-err">
-					An error occurred during the request
+					<div class="form-group">
+						<label for="url">URL:</label>
+						<input type="text" id="url" class="form-control" value="http://localhost/">
+					</div>
+					<div class="form-group">
+						<label for="data">Data (optional):</label>
+						<textarea id="data" class="form-control" placeholder="json data"></textarea>
+					</div>
+					<div class="form-group">
+						<div class="togglebutton">
+							<label>
+								<input type="checkbox" id="as-header"> Use data as additional headers
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="file">File (optional / alternative to json data):</label>
+						<input type="file" id="file">
+					</div>
+					<div class="form-group">
+						<button type="button" id="btn" class="btn btn-primary">Inspect</button>
+					</div>
+					<div class="alert alert-success" id="request-succ">
+						The request was executed successfully and the response was logged to the browser's console.
+					</div>
+					<div class="alert alert-danger" id="request-err">
+						An error occurred during the request
+					</div>
 				</div>
 			</div>
 		</div>
